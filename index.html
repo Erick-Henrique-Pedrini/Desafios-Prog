@@ -1,0 +1,103 @@
+<script>
+  const estoque = [
+    { id: 1, nome: "Caderno", preco: 15, quantidade: 10 },
+    { id: 2, nome: "Caneta", preco: 5, quantidade: 20 },
+    { id: 3, nome: "Mochila", preco: 120, quantidade: 5 },
+  ];
+
+  //Problema: Gestão de Estoque
+  /*
+    1. Criar uma função buscarProduto(nome) que recebe um nome e retorna o produto (ou mensagem de não encontrado).
+    2. Criar uma função adicionarEstoque(id, qtd) que aumenta o estoque de um produto.
+    3. Criar uma função venderProduto(id, qtd) que reduz o estoque e impede vendas acima do disponível.
+    4. Criar uma função calcularValorTotalEstoque() que retorna o valor total dos produtos no estoque.
+    5. Criar um menu (switch case) para o usuário escolher ações repetidamente (entre as funções desenvolvidas) até decidir sair (opção para sair - 0).
+    */
+
+  menu();
+
+  function menu() {
+    let escolha = prompt(
+      "Menu:\n1. Buscar Produto\n2. Adicionar Produto\n3. Vender Produto\n4. Calcular valor\n0. Sair"
+    );
+    switch (escolha) {
+      case "1":
+        buscarProduto();
+        break;
+      case "2":
+        adicionarEstoque();
+        break
+      case "3":
+        venderProduto();
+        break
+      case "4":
+        calcularValorTotalEstoque()
+        break
+      case "0":
+        return
+        break
+      default:
+    alert("Insira algo valido")
+      menu()
+    }
+  }
+
+  function buscarProduto() {
+    let pedido = prompt("Insira o produto").toLowerCase();
+    let mensagem = "Produto não encontrado";
+    estoque.forEach((item, index, array) => {
+      if (item.nome.toLowerCase() == pedido) {
+        mensagem = "Item encontrado " + JSON.stringify(item);
+        return;
+      }
+    });
+    alert(mensagem);
+    menu();
+  }
+
+  function adicionarEstoque() {
+    let quantidade = Number(prompt("Quantidade para adicionar"));
+    let id = prompt("id do produto");
+
+    let mensagem = "Produto não encontrado";
+    estoque.forEach((item, index, array) => {
+      if (item.id == id) {
+        item.quantidade += quantidade;
+        mensagem = "quanatidade adicionada com sucesso";
+
+        return;
+      }
+    });
+    alert(mensagem);
+    menu();
+  }
+  function venderProduto() {
+    let quantidade = Number(prompt("Quantidade para vender"));
+    let id = prompt("id do produto");
+
+    let mensagem = "Produto não encontrado";
+    estoque.forEach((item, index, array) => {
+      if (item.id == id) {
+        if (quantidade <= item.quantidade) {
+          item.quantidade -= quantidade;
+          mensagem = "unidades vendidas";
+
+          return;
+        } else {
+          mensagem = "Quantidades mais altas do que o estoque";
+        }
+      }
+    });
+    alert(mensagem);
+    menu();
+  }
+  function calcularValorTotalEstoque() {
+    let valor = 0
+    estoque.forEach((item, index, array) => {
+        valor += item.quantidade * item.preco
+        
+    });
+    alert("O valor do estoque é " + valor + "reais");
+    menu();
+  }
+</script>
