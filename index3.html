@@ -1,58 +1,91 @@
 <script>
-    const alunos = [
-        { nome: "Ana", notas: [7, 8, 9] },
-        { nome: "Carlos", notas: [5, 6, 4] },
-        { nome: "Bruna", notas: [9, 9, 10] }
-    ];
-    /*
-    1. Criar uma função calcularMedia(nome) que retorna a média de um aluno.
-    2. Criar uma função classificarAluno(nome) que retorna "Aprovado", "Recuperação" ou "Reprovado" com base na média.
-    3. Criar uma função adicionarNota(nome, nota) para incluir mais notas ao aluno.
-    4. Criar um menu interativo para buscar alunos, adicionar notas e verificar médias.
-    */
-
-    
+  const alunos = [
+    { nome: "Ana", notas: [7, 8, 9] },
+    { nome: "Carlos", notas: [5, 6, 4] },
+    { nome: "Bruna", notas: [9, 9, 10] }
+  ];
+  /*
+  1. Criar uma função calcularMedia(nome) que retorna a média de um aluno.
+  2. Criar uma função classificarAluno(nome) que retorna "Aprovado", "Recuperação" ou "Reprovado" com base na média.
+  3. Criar uma função adicionarNota(nome, nota) para incluir mais notas ao aluno.
+  4. Criar um menu interativo para buscar alunos, adicionar notas e verificar médias.
+  */ 
+  
+  
   menu();
-
+  
   function menu() {
-    let escolha = prompt(
-      "Menu:\n1. calcularMedia\n2. Adicionar Produto\n3. Vender Produto\n4. Calcular valor\n0. Sair"
-    );
+    let escolha = prompt("Menu:\n1. Calcular Média\n2. Classificar Aluno\n3. Adicionar Nota\n0. Sair");
     switch (escolha) {
       case "1":
-        let nome = prompt("Insira o nome")
-        calcularMedia(nome)
+        let nome1 = prompt("Informe o nome do aluno:");
+        calcularMedia(nome1);
         break;
       case "2":
-        adicionarEstoque();
-        break
+        let nome2 = prompt("Informe o nome do aluno:");
+        classificarAluno(nome2);
+        break;
       case "3":
-        venderProduto();
-        break
-      case "4":
-        calcularValorTotalEstoque()
-        break
+        let nome3 = prompt("Informe o nome do aluno:");
+        let nota = Number(prompt("Informe a nota a ser adicionada:"));
+        adicionarNota(nome3, nota);
+        break;
       case "0":
-        return
-        break
+        return;
       default:
-    alert("Insira algo valido")
-      menu()
+        alert("Opção invalida.");
     }
+    menu();
   }
-  function calcularMedia(nome){
-    let mensagem = "aluno nao encontrado"
-    let media = 0;
-  for(item of alunos){
-    
-    if(item.nome == nome){
-        for(let i = 0; i < item.notas; i++){
-            media += item.notas(i)
-        }
-      let mensagem = "media é "+  media / 3
+  function calcularMedia(nome) {
+    let aluno = alunos.find(alunos => alunos.nome.toLowerCase() === nome.toLowerCase());
+    if (!aluno) {
+      alert("Aluno não encontrado.");
+      return;
     }
+    let soma = 0;
+    for (let i = 0; i < aluno.notas.length; i++) {
+      soma += aluno.notas[i];
+    }
+    let media = soma / aluno.notas.length;
+    alert("Média de " + aluno.nome + " é " + media.toFixed(2));
+    return media;
   }
-  alert(mensagem)
-  menu()
+  
+  function classificarAluno(nome) {
+    let aluno = alunos.find(alunos => alunos.nome.toLowerCase() === nome.toLowerCase());
+    if (!aluno) {
+      alert("Aluno não encontrado.");
+      return;
+    }
+    let soma = 0;
+    for (let i = 0; i < aluno.notas.length; i++) {
+      soma += aluno.notas[i];
+    }
+    let media = soma / aluno.notas.length;
+    let classificacao = "";
+    if (media >= 7) {
+      classificacao = "Aprovado";
+    } else if (media >= 5) {
+      classificacao = "Recuperação";
+    } else {
+      classificacao = "Reprovado";
+    }
+    alert(aluno.nome + " está " + classificacao + " com média " + media.toFixed(2));
+    return classificacao;
   }
-</script>
+  
+  function adicionarNota(nome, nota) {
+    let aluno = alunos.find(a => a.nome.toLowerCase() === nome.toLowerCase());
+    if (!aluno) {
+      alert("Aluno não encontrado.");
+      return;
+    }
+    aluno.notas.push(nota);
+    alert("Nota adicionada. Novas notas de " + aluno.nome + ": " + aluno.notas.join(", "));
+  }
+  
+ 
+  
+  
+  </script>
